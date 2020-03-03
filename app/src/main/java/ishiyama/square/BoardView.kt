@@ -115,21 +115,20 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             } else {
                 val x = (event.x / uniteSize).toInt()
                 val y = (event.y / uniteSize).toInt()
-                if (x >= board.width || y >= board.height)
-                    return true
-                if (board.lines[x][y].slash != 0 && board.lines[x][y].backslash != 0)
-                    return true
-                select = true
-                point = Point(x, y)
-                menu.x = when (x) {
-                    0 -> 0F
-                    board.width-1 -> (board.width-3)*uniteSize
-                    else -> (x-1)*uniteSize
-                }
-                menu.y = when {
-                    y < board.height-2 -> (y+4/3F)*uniteSize
-                    else -> (y-2)*uniteSize
-                }
+                if (x < board.width && y < board.height)
+                    if (board.lines[x][y].slash == 0 || board.lines[x][y].backslash == 0) {
+                        select = true
+                        point = Point(x, y)
+                        menu.x = when (x) {
+                            0 -> 0F
+                            board.width - 1 -> (board.width - 3) * uniteSize
+                            else -> (x - 1) * uniteSize
+                        }
+                        menu.y = when {
+                            y < board.height - 2 -> (y + 4 / 3F) * uniteSize
+                            else -> (y - 2) * uniteSize
+                        }
+                    }
             }
         }
         invalidate()
